@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'detail_screen.dart';
+import 'pokemon_list_screen.dart';
+import 'search_detail_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -8,16 +9,26 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text("Pokémon App")),
-      body: const Center(child: Text("Welcome to PokéFetcher!")),
-      floatingActionButton: FloatingActionButton.extended(
-        label: const Text("Next"),
-        icon: const Icon(Icons.arrow_forward),
-        onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => const DetailScreen()),
-          );
-        },
+      body: Center(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            ElevatedButton(
+              onPressed: () => Navigator.push(
+                context,
+                MaterialPageRoute(builder: (_) => const PokemonListScreen()),
+              ),
+              child: const Text("List Pokémon"),
+            ),
+            ElevatedButton(
+              onPressed: () => Navigator.push(
+                context,
+                MaterialPageRoute(builder: (_) => const SearchDetailScreen()),
+              ),
+              child: const Text("Search Pokémon by Name"),
+            )
+          ],
+        ),
       ),
     );
   }

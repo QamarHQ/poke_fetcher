@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'screens/home_screen.dart';
+import 'screens/pokemon_list_screen.dart';
 
 void main() {
   runApp(const PokeFetcherApp());
@@ -13,8 +14,9 @@ class PokeFetcherApp extends StatelessWidget {
     return MaterialApp(
       title: 'PokéFetcher',
       theme: ThemeData(useMaterial3: true),
-      home: const HomeScreen(),
+      home: const PokemonListScreen(),
     );
   }
 }
+
 
