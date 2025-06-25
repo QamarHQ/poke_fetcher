@@ -3,6 +3,7 @@ import '../services/poke_service.dart';
 import '../models/pokemon_list_item.dart';
 import '../models/pokemon_model.dart';
 import 'detail_screen.dart';
+import 'filtered_list_screen.dart';
 
 class PokemonListScreen extends StatefulWidget {
   const PokemonListScreen({super.key});
@@ -37,10 +38,31 @@ class _PokemonListScreenState extends State<PokemonListScreen> {
 
     try {
       final list = await PokeService.getPokemonList(number);
-      setState(() => _pokemonList = list);
+      setState(() {
+        _pokemonList = list;
+      });
     } catch (e) {
       setState(() => _error = "Failed to fetch data.");
     }
+  }
+
+  void _navigateToFilteredList(bool showOdd) {
+    final filtered = _pokemonList
+        .asMap()
+        .entries
+        .where((entry) => showOdd ? entry.key.isOdd : entry.key.isEven)
+        .map((entry) => entry.value)
+        .toList();
+
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (_) => FilteredListScreen(
+          filteredList: filtered,
+          title: showOdd ? "Odd" : "Even",
+        ),
+      ),
+    );
   }
 
   @override
@@ -55,7 +77,7 @@ class _PokemonListScreenState extends State<PokemonListScreen> {
               controller: _controller,
               keyboardType: TextInputType.number,
               decoration: const InputDecoration(
-                labelText: "Enter number of Pokémon (1-100)",
+                labelText: "Enter number of Pokémon (1–100)",
                 border: OutlineInputBorder(),
               ),
             ),
@@ -94,10 +116,28 @@ class _PokemonListScreenState extends State<PokemonListScreen> {
                 },
               ),
             ),
+            const SizedBox(height: 10),
+            if (_pokemonList.isNotEmpty)
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  OutlinedButton(
+                    onPressed: () => _navigateToFilteredList(true),
+                    child: const Text("Odd"),
+                  ),
+                  OutlinedButton(
+                    onPressed: () => _navigateToFilteredList(false),
+                    child: const Text("Even"),
+                  ),
+                ],
+              ),
           ],
         ),
       ),
     );
   }
 }
+
+
+
 
