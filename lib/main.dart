@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'screens/home_screen.dart';
 
-
 void main() {
-  runApp(const PokeFetcherApp());
+  runApp(const ProviderScope(child: PokeFetcherApp()));
 }
 
 class PokeFetcherApp extends StatelessWidget {
@@ -18,5 +18,6 @@ class PokeFetcherApp extends StatelessWidget {
     );
   }
 }
+
 
 
